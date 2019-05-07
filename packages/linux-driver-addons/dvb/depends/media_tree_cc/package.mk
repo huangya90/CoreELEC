@@ -2,8 +2,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="media_tree_cc"
-PKG_VERSION="2019-05-12"
-PKG_SHA256="55bd8b54c83110a30d8ad44761e888a4bad4745f1ae4765dcf44f2752fc96419"
+PKG_VERSION="2019-03-08"
+PKG_SHA256="e3394cb051c9bd450e84f6597072fe65ab7d1a45113cfbe5027dd9137129834f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://bitbucket.org/CrazyCat/media_build/downloads/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"
@@ -11,6 +11,12 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_LONGDESC="Source of Linux Kernel media_tree subsystem to build with media_build."
 PKG_TOOLCHAIN="manual"
+
+case "$LINUX" in
+  amlogic-4.9)
+    PKG_PATCH_DIRS="amlogic-4.9"
+    ;;
+esac
 
 unpack() {
   mkdir -p $PKG_BUILD/
