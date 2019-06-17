@@ -157,4 +157,4 @@
     ENTWARE_ARCH="aarch64-k3.10"
 
   # CoreELEC Subdevices
-    SUBDEVICES="Odroid_N2"
+    SUBDEVICES="Odroid_N2 Beelink_GT_King"
