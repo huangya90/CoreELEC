@@ -43,6 +43,9 @@ for arg in $(cat /proc/cmdline); do
           *odroid_n2)
             SUBDEVICE="Odroid_N2"
             ;;
+          *beelink_gt_king)
+            SUBDEVICE="Beelink_GT_King"
+            ;;
         esac
       fi
 
@@ -118,10 +121,19 @@ if [ "${SUBDEVICE}" == "Odroid_N2" ]; then
   fi
 fi
 
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot -a ! -e /dev/system -a ! -e /dev/boot ]; then
-  echo "Updating u-boot on: $BOOT_DISK..."
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync bs=1 count=112 status=none
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync bs=512 skip=1 seek=1 status=none
+if [ "${SUBDEVICE}" == "Odroid_N2" ]; then
+  if [ -f $SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot ]; then
+    echo "Updating u-boot on: $BOOT_DISK..."
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync bs=1 count=112 status=none
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync bs=512 skip=1 seek=1 status=none
+  fi
+elif [ "${SUBDEVICE}" == "Beelink_GT_King" ]; then
+  if [ -f $SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot ]; then
+    BOOT_DISK="/dev/mmcblk0"
+    echo "Updating u-boot on: $BOOT_DISK..."
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync bs=1 count=112 status=none
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync bs=512 skip=1 seek=1 status=none
+  fi
 fi
 
 if [ -f $BOOT_ROOT/aml_autoscript ]; then
