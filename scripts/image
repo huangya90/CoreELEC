@@ -50,7 +50,7 @@ function do_mkimage() {
     SYSTEM_SIZE="$SYSTEM_SIZE" \
     SYSTEM_PART_START="$SYSTEM_PART_START" \
     OVA_SIZE="$OVA_SIZE" \
-    [ -n "$SUBDEVICE" ] && SUBDEVICE="$SUBDEVICE" \
+    SUBDEVICE="$SUBDEVICE" \
     $SCRIPTS/mkimage
 }
 
